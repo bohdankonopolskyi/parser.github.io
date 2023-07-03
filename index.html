@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Data Processing Example</title>
+    <script>
+      function processText() {
+        // Get the input text from the first field
+        var inputText = document.getElementById("inputField").value;
+        
+        // Perform the desired data processing logic
+        // For example, let's count the number of characters and words in the input text
+        var characterCount = inputText.length;
+        var wordCount = inputText.trim().split(/\s+/).length;
+        
+        // Create a result message
+        var resultMessage = "Character count: " + characterCount + "\n";
+        resultMessage += "Word count: " + wordCount;
+        
+        // Set the result message in the second field
+        document.getElementById("outputField").value = resultMessage;
+      }
+    </script>
+  </head>
+  <body>
+    <textarea id="inputField" rows="5" cols="50"></textarea><br>
+    <button onclick="processText()">Process</button><br>
+    <textarea id="outputField" rows="5" cols="50" readonly></textarea>
+  </body>
+</html>

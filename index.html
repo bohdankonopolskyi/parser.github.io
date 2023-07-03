@@ -4,20 +4,34 @@
     <title>Data Processing Example</title>
     <script>
       function processText() {
-        // Get the input text from the first field
         var inputText = document.getElementById("inputField").value;
-        
-        // Perform the desired data processing logic
-        // For example, let's count the number of characters and words in the input text
-        var characterCount = inputText.length;
-        var wordCount = inputText.trim().split(/\s+/).length;
-        
-        // Create a result message
-        var resultMessage = "Character count: " + characterCount + "\n";
-        resultMessage += "Word count: " + wordCount;
-        
-        // Set the result message in the second field
-        document.getElementById("outputField").value = resultMessage;
+  
+  var segments = inputText.match(/PEG_\d+/g); // Extract PEG segments
+  
+  var output = ""; // Initialize the output string
+  
+  for (var i = 0; i < segments.length; i++) {
+    var segmentNumber = i + 1; // Segment number starting from 1
+    var segmentText = segments[i].substring(4); // Extract the number after PEG_
+    
+    // Append the segment header
+    output += "ЧАСТИНА " + segmentNumber + "\n";
+    output += segmentText + " ";
+    
+    // Append the groups of 50 numbers
+    for (var j = 1; j <= 2500; j++) {
+      output += j + " ";
+      
+      // Add a line break after every 50 numbers
+      if (j % 50 === 0) {
+        output += "\n";
+      }
+    }
+    
+    output += "\n\n";
+  }
+  
+  document.getElementById("outputField").value = output;
       }
     </script>
   </head>

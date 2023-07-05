@@ -1,43 +1,62 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Data Processing Example</title>
+<head>
+    <title>Data Processing</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
     <script>
-      function processText() {
-        var inputText = document.getElementById("inputField").value;
-  
-  var segments = inputText.match(/PEG_\d+/g); // Extract PEG segments
-  
-  var output = ""; // Initialize the output string
-  
-  for (var i = 0; i < segments.length; i++) {
-    var segmentNumber = i + 1; // Segment number starting from 1
-    var segmentText = segments[i].substring(4); // Extract the number after PEG_
-    
-    // Append the segment header
-    output += "ЧАСТИНА " + segmentNumber + "\n";
-    output += segmentText + " ";
-    
-    // Append the groups of 50 numbers
-    for (var j = 1; j <= 2500; j++) {
-      output += j + " ";
-      
-      // Add a line break after every 50 numbers
-      if (j % 50 === 0) {
-        output += "\n";
-      }
-    }
-    
-    output += "\n\n";
-  }
-  
-  document.getElementById("outputField").value = output;
-      }
+
+        function parse() {
+            var inputText = document.getElementById("inputField").value;
+
+            var segments = inputText.match(/PEG_\d+/g);
+
+            var output = "";
+            var partIndex = 1;
+            for (let i = 0; i < segments.length; i++) {
+                var segmentNumber = i + 1;
+
+                var segmentText = segments[i].substring(4);
+
+                if (segmentNumber % 50 === 0 || segmentNumber === 1) {
+                    output += "\n" + "Part " + partIndex + "\n";
+                    partIndex += 1
+                }
+
+                output += segmentText + " ";
+            }
+
+            document.getElementById("outputField").value = output;
+        }
+
+        function pasteText() {
+            navigator.clipboard.readText().then(function (pastedText) {
+                document.getElementById("inputField").value = pastedText;
+            });
+        }
+
+        function copyText() {
+            var outputText = document.getElementById("outputField").value;
+
+            var tempTextArea = document.createElement("textarea");
+            tempTextArea.value = outputText;
+            document.body.appendChild(tempTextArea);
+
+            tempTextArea.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempTextArea);
+            alert("Text copied!");
+        }
     </script>
-  </head>
-  <body>
-    <textarea id="inputField" rows="5" cols="50"></textarea><br>
-    <button onclick="processText()">Process</button><br>
-    <textarea id="outputField" rows="5" cols="50" readonly></textarea>
-  </body>
+</head>
+<body>
+<label for="inputField"></label><textarea cols="50" id="inputField" rows="5"></textarea>
+<br>
+<button onclick="pasteText()">Paste raw text</button>
+<br>
+<button onclick="parse()">Process</button>
+<br>
+<label for="outputField"></label><textarea cols="50" id="outputField" readonly rows="5"></textarea>
+<br>
+<button onclick="copyText()">Copy processed text</button>
+</body>
 </html>

@@ -18,15 +18,16 @@
 
                 var segmentText = segments[i].substring(4);
 
-                if (segmentNumber % 50 === 0 || segmentNumber === 1) {
-                    output += "\n" + "Частина " + partIndex + "\n";
+                if (segmentNumber % 60 === 0 || segmentNumber === 1) {
+                    output += "<br><br><b>Частина " + partIndex + "</b><br>";
                     partIndex += 1
                 }
 
-                output += segmentText + " ";
+                output += segmentText + ", ";
             }
 
             document.getElementById("outputField").value = output;
+            document.getElementById("formattedOutput").innerHTML = output;
         }
 
         function pasteText() {
@@ -47,7 +48,36 @@
             document.body.removeChild(tempTextArea);
             alert("Text copied!");
         }
+
+        function copyFormattedText() {
+        var formattedText = document.getElementById("formattedOutput").innerText;
+        
+        var tempTextArea = document.createElement("textarea");
+        tempTextArea.value = formattedText;
+        document.body.appendChild(tempTextArea);
+        
+        tempTextArea.select();
+        document.execCommand("copy");
+        
+        document.body.removeChild(tempTextArea);
+        
+        alert("Formatted text copied!");
+      }
     </script>
+    <!-- <style>
+        @font-face {
+          font-family: 'Montserrat-Regular';
+          src: url('fonts/Montserrat-Regular.otf') format('truetype'); /* Replace 'font-file.ttf' with the actual font file name and path */
+          /* If you have multiple font files for different font formats, provide additional src declarations for each format */
+        }
+        
+        /* Optionally, you can define CSS rules to apply the custom font to specific elements */
+        /* For example, to apply the custom font to the "formattedOutput" div, you can use: */
+        /* #formattedOutput {
+              font-family: 'CustomFontName', sans-serif;
+           } */
+      </style> -->
+      
 </head>
 <body>
 <label for="inputField"></label><textarea cols="50" id="inputField" rows="5"></textarea>
@@ -59,5 +89,10 @@
 <label for="outputField"></label><textarea cols="50" id="outputField" readonly rows="5"></textarea>
 <br>
 <button onclick="copyText()">Copy processed text</button>
+<br>
+<button onclick="copyFormattedText()">Copy Formatted Text lower</button>
+<br>
+<div id="formattedOutput"></div>
+
 </body>
 </html>

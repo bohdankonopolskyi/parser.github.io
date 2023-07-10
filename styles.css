@@ -15,3 +15,7 @@ button {
     margin: 5px;
     cursor: pointer;
 }
+
+#formattedOutput {
+    font-family: 'Montserrat-Regular', sans-serif;
+ } 
